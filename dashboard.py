@@ -183,7 +183,7 @@ with tabs[0]:
         fig_p2 = px.line(df_plot, x="data_registro", y="poeira2_mg_m3", title=f"Poeira 2 (mg/m³) — {freq_label.lower()}", markers=False)
         st.plotly_chart(fig_p2, use_container_width=True)
 
-    # Linha: temperatura e umidade
+    # Colunas: temperatura e umidade
     cols = st.columns(2)
     with cols[0]:
         fig_t = px.line(df_plot, x="data_registro", y="temperatura_c", title=f"Temperatura (°C) — {freq_label.lower()}", markers=False)
