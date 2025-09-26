@@ -8,8 +8,25 @@ import paho.mqtt.client as mqtt
 
 app = Flask('registro')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:Senai%40134@127.0.0.1/db_coleta2'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://grupo5:Senai%40134@projeto-integrador5.mysql.database.azure.com/db_coleta'
 app.config['SQLALCHEMY_ECHO'] = True  
+
+server_name = 'projeto-integrador5.mysql.database.azure.com'
+port = '3306'
+username = 'grupo5'
+password = 'Senai%40134'
+data_base = 'db_coleta'
+
+certificado = 'DigiCertGlobalRootG2.crt.pem'
+
+uri = f"mysql://{username}:{password}@{server_name}:{port}/{data_base}"
+ssl_certificado = f"?ssl_ca={certificado}"
+
+
+app.config['SQLALCHEMY_DATABASE_URI'] = uri + ssl_certificado   
+
+
+
 
 mybd = SQLAlchemy(app)
 
@@ -134,7 +151,7 @@ def get_data():
 # ********************* MODELO BANCO DE DADOS *********************************
 
 class Registro(mybd.Model):
-    __tablename__ = 'tb_registros_teste'
+    __tablename__ = 'tb_registros'
     id_registro = mybd.Column(mybd.Integer, primary_key=True, autoincrement=True)
     temperatura_c = mybd.Column(mybd.Numeric(10, 2))
     pressao_pa = mybd.Column(mybd.Numeric(10, 2))
