@@ -3,7 +3,7 @@ import pandas as pd
 import plotly.express as px
 from query import conexao  # sua função já existente
 
-st.set_page_config(page_title="Dashboard • tb_registros", layout="wide")
+st.set_page_config(page_title="Dashboard • Sensores", layout="wide")
 
 # -----------------------------
 # Carga de dados
