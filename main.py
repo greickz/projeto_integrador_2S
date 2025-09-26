@@ -36,7 +36,7 @@ mqtt_data = {}
 
 def on_connect(client, userdata, flags, rc, properties=None):
     print("Connected with result code " + str(rc))
-    client.subscribe("projeto_integrado/SENAI134/Cienciadedados/grupo1")
+    client.subscribe("projeto_integrado/SENAI134/Cienciadedados/grupo5")
 
 def on_message(client, userdata, msg):
     global mqtt_data

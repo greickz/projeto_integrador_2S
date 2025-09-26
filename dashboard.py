@@ -31,7 +31,7 @@ def carregar_dados():
         df["status_registro"] = df["status_registro"].fillna("False").astype(str)
     return df
 
-st.title("📈 Monitoramento de Sensores — tb_registros")
+st.title("📈 Monitoramento de Sensores")
 
 # Botão atualizar (ignora cache)
 col_atualizar, col_download = st.columns([1, 3])
@@ -195,11 +195,33 @@ with tabs[0]:
     # Linha: pressão e altitude
     cols = st.columns(2)
     with cols[0]:
-        fig_p = px.line(df_plot, x="data_registro", y="pressao_pa", title=f"Pressão (Pa) — {freq_label.lower()}", markers=False)
+        st.write("Pressão (Pa)")
+        valor_pressao = df_plot.groupby("data_registro").mean()[["pressao_pa"]].sort_values(by="pressao_pa", ascending=False)
+
+        fig_p = px.bar(
+            valor_pressao,
+            x=valor_pressao.index,
+            y="pressao_pa",
+            orientation="v",  # v = barras verticais (h = horizontais)
+            title=f"Pressão (Pa) — {freq_label.lower()}",
+            color_discrete_sequence=["#0083b8"]
+        )
         st.plotly_chart(fig_p, use_container_width=True)
-    with cols[1]:
-        fig_alt = px.line(df_plot, x="data_registro", y="altitude_m", title=f"Altitude (m) — {freq_label.lower()}", markers=False)
-        st.plotly_chart(fig_alt, use_container_width=True)
+
+with cols[1]:
+    st.write("Altitude (m)")
+    valor_altitude = df_plot.groupby("data_registro").mean()[["altitude_m"]].sort_values(by="altitude_m", ascending=False)
+
+    fig_alt = px.bar(
+        valor_altitude,
+        x=valor_altitude.index,
+        y="altitude_m",
+        orientation="v",
+        title=f"Altitude (m) — {freq_label.lower()}",
+        color_discrete_sequence=["#0083b8"]
+    )
+    st.plotly_chart(fig_alt, use_container_width=True)
+
 
 with tabs[1]:
     st.write("Comparações lado a lado")
